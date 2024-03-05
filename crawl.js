@@ -28,17 +28,15 @@ function getURLsfromHTML(htmlBody, baseURL) {
 }
 
 async function crawlPage(baseURL, currentURL, pages) {
-  console.log(currentURL);
   if (new URL(baseURL).hostname !== new URL(currentURL).hostname) {
     return pages;
   }
 
   const normalizedCurrentURL = normalizeURL(currentURL);
-  if (pages[normalizedCurrentURL]) {
-    pages[normalizedCurrentURL] = pages[normalizedCurrentURL]++;
+  if (pages[normalizedCurrentURL] !== undefined) {
+    pages[normalizedCurrentURL] = pages[normalizedCurrentURL] + 1;
     return pages;
   } else {
-    pages[normalizedCurrentURL] = 1;
     try {
       const response = await fetch(currentURL);
       if (response.status >= 400) {
@@ -56,6 +54,7 @@ async function crawlPage(baseURL, currentURL, pages) {
         return pages;
       }
 
+      pages[normalizedCurrentURL] = 1;
       const body = await response.text();
       const pageURLs = getURLsfromHTML(body, currentURL);
       for (const url in pageURLs) {
