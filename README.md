@@ -8,11 +8,19 @@ This is a guided project from <a href="https://boot.dev">Boot.dev</a>
 ```bash
 git clone git@github.com:Shobhit-Nagpal/crawlr.git
 ```
-2. Run the script
+2. Install dependencies
+```bash
+npm install
+```
+
+```bash
+pip install pandas matplotlib
+```
+3. Run the script
 ```bash
 npm run https://example.com/
 ```
-3. Get results
+4. Get results in visits.csv and visualization in bar_chart.png
 
 # Working
 ### The way Crawlr works is as follows:
@@ -27,3 +35,5 @@ For example:
 5. crawlPage is a recursive function which takes in base url, current url and pages. Pages is an object which keeps track of all the links we've visited and the number of visits that link has had, current URL is the current page link we're crawling. 
 6. crawlPage returns the pages object which is then given to the printReport function in report.js
 7. printReport takes the pages object, sorts the links by number of visits and then prints the internal link visits in a readable format 
+8. After the report, we generate a csv file with generateCSV function which outputs a file called visits.csv
+9. Then we can run the generate_visual.py script to create a bar chart
