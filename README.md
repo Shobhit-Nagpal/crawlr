@@ -15,7 +15,7 @@ npm run https://example.com/
 3. Get results
 
 # Working
-- The way Crawlr works is as follows:
+### The way Crawlr works is as follows:
 1. The main functions are present in the crawl.js file 
 2. In crawl.js, we have 3 functions ; normalizeURL, getURLsfromHTML and crawlPage
 3. normalizeURL normalizes the URL given to it using the URL class provided by Node.
