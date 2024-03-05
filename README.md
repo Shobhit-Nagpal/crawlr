@@ -21,6 +21,9 @@ pip install pandas matplotlib
 npm run https://example.com/
 ```
 4. Get results in visits.csv and visualization in bar_chart.png
+```bash
+python3 generate_visual.py
+```
 
 # Working
 ### The way Crawlr works is as follows:
