@@ -48,11 +48,12 @@ async function crawlPage(baseURL, currentURL, pages) {
       }
 
       pages[normalizedCurrentURL] = 1;
+      console.log(`Crawling ${normalizedCurrentURL}`);
 
       const contentType = response.headers.get("content-type").split(";")[0];
       if (contentType !== "text/html") {
         console.error(
-          `Content-Type is not text/html. Recieved ${contentType} on ${currentURL}`,
+          `Received ${contentType} on ${currentURL}`,
         );
         return pages;
       }
