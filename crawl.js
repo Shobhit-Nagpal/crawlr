@@ -7,7 +7,8 @@ function normalizeURL(baseURL) {
   if (url.pathname === "/") {
     return url.hostname;
   }
-  return url.hostname + "/" + url.pathname.slice(1);
+  const pathname = url.pathname[url.pathname.length - 1] === "/" ? url.pathname.slice(1).slice(0,-1) : url.pathname.slice(1);
+  return url.hostname + "/" + pathname;
 }
 
 function getURLsfromHTML(htmlBody, baseURL) {
@@ -16,7 +17,7 @@ function getURLsfromHTML(htmlBody, baseURL) {
   dom.window.document.querySelectorAll("a").forEach((link) => {
     let absoluteURL = "";
     if (link.href[0] === "/") {
-      absoluteURL = baseURL + link.href.slice(1);
+      absoluteURL = new URL(baseURL).origin + "/" + link.href.slice(1);
       links.push(absoluteURL);
     } else {
       absoluteURL = link.href;
