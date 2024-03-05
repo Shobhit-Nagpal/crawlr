@@ -1,6 +1,7 @@
 const { argv } = require("node:process");
 const { crawlPage } = require("./crawl");
 const { printReport } = require("./report");
+const { generateCSV } = require("./csv");
 
 async function main() {
   if (argv.length !== 3) {
@@ -9,9 +10,15 @@ async function main() {
   }
 
   const baseURL = argv[argv.length - 1];
-  const pages = await crawlPage(baseURL, baseURL, {});
-  console.log("These are all pages: ", pages);
-  printReport(pages);
+  try {
+    const pages = await crawlPage(baseURL, baseURL, {});
+    console.log("These are all pages: ", pages);
+    printReport(pages);
+    generateCSV(pages);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
 }
 
 main();
