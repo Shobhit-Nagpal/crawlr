@@ -47,6 +47,8 @@ async function crawlPage(baseURL, currentURL, pages) {
         return pages;
       }
 
+      pages[normalizedCurrentURL] = 1;
+
       const contentType = response.headers.get("content-type").split(";")[0];
       if (contentType !== "text/html") {
         console.error(
@@ -55,7 +57,6 @@ async function crawlPage(baseURL, currentURL, pages) {
         return pages;
       }
 
-      pages[normalizedCurrentURL] = 1;
       const body = await response.text();
       const pageURLs = getURLsfromHTML(body, currentURL);
       for (const url in pageURLs) {
