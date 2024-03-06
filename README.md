@@ -18,7 +18,7 @@ pip install pandas matplotlib
 ```
 3. Run the script
 ```bash
-npm run https://example.com/
+npm start https://example.com/
 ```
 4. Get results in visits.csv and visualization in bar_chart.png
 ```bash
