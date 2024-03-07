@@ -4,10 +4,19 @@ const { JSDOM } = jsdom;
 
 function normalizeURL(baseURL) {
   const url = new URL(baseURL);
+
+  if (url === undefined) {
+    console.error(`Attempt to normalize invalid URL: ${url}`);
+    return;
+  }
+
   if (url.pathname === "/") {
     return url.hostname;
   }
-  const pathname = url.pathname[url.pathname.length - 1] === "/" ? url.pathname.slice(1).slice(0,-1) : url.pathname.slice(1);
+  const pathname =
+    url.pathname[url.pathname.length - 1] === "/"
+      ? url.pathname.slice(1).slice(0, -1)
+      : url.pathname.slice(1);
   return url.hostname + "/" + pathname;
 }
 
@@ -20,8 +29,10 @@ function getURLsfromHTML(htmlBody, baseURL) {
       absoluteURL = new URL(baseURL).origin + "/" + link.href.slice(1);
       links.push(absoluteURL);
     } else {
-      absoluteURL = link.href;
-      links.push(absoluteURL);
+      if (link.href !== "") {
+        absoluteURL = link.href;
+        links.push(absoluteURL);
+      }
     }
   });
 
@@ -52,9 +63,7 @@ async function crawlPage(baseURL, currentURL, pages) {
 
       const contentType = response.headers.get("content-type").split(";")[0];
       if (contentType !== "text/html") {
-        console.error(
-          `Received ${contentType} on ${currentURL}`,
-        );
+        console.error(`Received ${contentType} on ${currentURL}`);
         return pages;
       }
 
